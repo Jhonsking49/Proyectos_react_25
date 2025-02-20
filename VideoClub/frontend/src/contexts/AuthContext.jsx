@@ -1,64 +1,74 @@
-import { createContext, useState } from "react";
+import { useEffect, useState } from "react";
+import { createContext } from "react";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(); // Change to named export
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({children}) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState(null);
 
-    //---------------------------------------Declaración de estados del contexto-------------------------------------------
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsAuthenticated(true);
+            const savedUser = localStorage.getItem('user');
+            if (savedUser) {
+                setUser(JSON.parse(savedUser));
+            }
+        }
+    }, []);
 
-    const [user, setUser] = useState(()=>{
-        const user = JSON.parse(localStorage.getItem("user"));
-        return user ? JSON.parse(user) : null;
-    });
+    const login = async (username, password) => {
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({"username": username, "password": password}),
+                credentials: 'include'
+            });
 
-    const [token, setToken] = useState(()=> {
-        const token = localStorage.getItem("token");
-        return token ? JSON.parse(token) : null;
-    });
-
-    const [isAuthenticated, setIsAuthenticated] = useState(()=>{
-        //localStorage.getItem("token") === "true"? true : false;
-        /* !!localStorage.getItem("token");*/
-        token? true : false;
-    });
-
-    const [authError, setAuthError] = useState(false);
-
-    //---------------------------Declaracion de funciones que utilizarán los estados del contexto-----------------------------
-
-    // cuando haces un login, te devolverá un token si el usuario y contraseña son correctos
-    const login = (userData, token) => {
-        setUser(userData);
-        setToken(token);
-        setIsAuthenticated(true);
-        //guardo los cambios en el localStorage
-        localStorage.setItem("token", JSON.stringify(token));
-        localStorage.setItem("user", JSON.stringify(userData));
-        setAuthError(false);
+            if (response.ok) {
+                setIsAuthenticated(true);
+                setUser({ username });
+                localStorage.setItem('token', 'true');
+                localStorage.setItem('user', JSON.stringify({ username }));
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error('Login error:', error);
+            return false;
+        }
     };
 
-    const logout = () => {
-        setUser(null);
-        setToken(null);
-        setIsAuthenticated(false);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-    };
-
-
-    const value = {
-        user,
-        token,
-        isAuthenticated,
-        authError,
-        setAuthError,
-        login,
-        logout
+    const logout = async () => {
+        try {
+            await fetch('http://localhost:3000/api/auth/logout', {
+                method: 'POST',
+                credentials: 'include'
+            });
+        } catch (error) {
+            console.error('Logout error:', error);
+        } finally {
+            setIsAuthenticated(false);
+            setUser(null);
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+        }
     };
 
     return (
-        <AuthContext.Provider value={value}>
+        <AuthContext.Provider value={{ 
+            isAuthenticated, 
+            user, 
+            login, 
+            logout 
+        }}>
             {children}
         </AuthContext.Provider>
-    )
-}
+    );
+};
+// Remove or modify the default export
+// export default AuthContext;

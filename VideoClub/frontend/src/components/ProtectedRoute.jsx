@@ -1,30 +1,15 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext"; // Change to named import
 
 const ProtectedRoute = () => {
+    const { isAuthenticated } = useContext(AuthContext);
 
-    const [auth, setAuth] = useState({
-        username: "",
-        password: ""
-    });
-    
-    const handleLogin = (e) => {
-        e.preventDefault();
-        setAuth({
-            username: e.target.username.value,
-            password: e.target.password.value
-        });
-        console.log(auth);
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
     }
-    
-    return (
-        <div>
-            <form onSubmit={handleLogin}>
-                <input type="text" name="username" placeholder="Usuario" />
-                <input type="password" name="password" placeholder="Contraseña" />
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    )
-}
 
-export default ProtectedRoute
+    return <Outlet />;
+};
+
+export default ProtectedRoute;

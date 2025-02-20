@@ -1,6 +1,18 @@
 import { NavLink, Outlet } from "react-router-dom"
 
 const Rootlayout = () => {
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+        } catch (error) {
+            console.error('Logout error:', error);
+        } finally {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.reload();
+        }
+    };
     return (
         // Contenedor Principal
         <div className="flex flex-col min-h-screen bg-gray-100">
@@ -46,11 +58,20 @@ const Rootlayout = () => {
                                 </NavLink>
                             </div>
                         </div>
+                        <div className="flex items-center">
+                            <button onClick={handleLogout} className="hover:text-amber-600 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                                </svg>
+
+                                Logout
+                            </button>
+                        </div>
                     </div>
                 </div>
             </nav>
             {/* Contenedor principal donde colocar el outlet */}
-            <main className="max-w-7xl px-4 py-6 flex-grow">
+            <main className="max-w-7xl mx-auto w-full px-4 py-6 flex-grow">
                 {/*Outlet */}
                 <Outlet />
             </main>

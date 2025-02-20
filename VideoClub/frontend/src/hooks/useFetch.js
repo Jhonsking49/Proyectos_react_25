@@ -26,6 +26,6 @@ export const useFetch = (fetchFunction, dependencias = []) => {
         }
     }, dependencias);
 
-    return [data, loading, error];
+    return [data, loading, error, setError];
     
 }

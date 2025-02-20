@@ -1,31 +1,39 @@
 import { Link } from "react-router-dom"
-import { getImageUrl } from "../services/tmdb"
+import { getImageUrl, IMAGES_SIZE } from "../services/tmdb";
 
 const MovieCard = ({ movie }) => {
-    //console.log(movie);
-    const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
+    const posterUrl = movie.poster_path 
+        ? getImageUrl(movie.poster_path, IMAGES_SIZE.POSTER)
+        : 'https://via.placeholder.com/500x750?text=No+Image';
+
     return (
-        <Link to={`/movie/${movie.id}`} className="bg-sky-800">
-            <article className="card transform transition-transform duration-300 hover:scale-105">
-            <div className="relative aspect-[2/3]">
+        <Link to={`/movie/${movie.id}`} className="block transition-transform hover:scale-105">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <img
-                src={movie.poster_path ? getImageUrl("w500", movie.poster_path) : "/placeholder-movie.jpg"} 
-                alt={movie.title} 
-                className="object-cover w-full h-full rounded-lg shadow-lg"
+                    src={posterUrl}
+                    alt={movie.title}
+                    className="w-full h-[400px] object-cover"
+                    onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/500x750?text=No+Image';
+                    }}
                 />
-                <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white py-1  px-2 rounded">
-                ⭐ {rating}
+                <div className="p-4">
+                    <h3 className="text-lg font-semibold text-gray-800 truncate">
+                        {movie.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                        {new Date(movie.release_date).getFullYear()}
+                    </p>
+                    <div className="mt-2 flex items-center">
+                        <span className="text-yellow-500">⭐</span>
+                        <span className="ml-1 text-gray-600">
+                            {movie.vote_average.toFixed(1)}
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div className="p-4">
-                <h3 className="font-bold text-lg line-clamp-2 text-white">{movie.title}</h3>
-                <p className="text-sm text-gray-500 line-clamp-2" >
-                {movie.release_date}
-                </p>
-            </div>
-            </article>
         </Link>
-        );
+    );
 };
 
 export default MovieCard;

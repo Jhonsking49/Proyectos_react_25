@@ -1,11 +1,10 @@
+
 import { useState } from "react"
 import { useFetch } from "../hooks/useFetch";
 import { getPopularMovies } from "../services/tmdb";
 import MovieCard from "../components/MovieCard";
 
-
-
-const Home = () => {
+const HomePage = () => {
     const [page, setPage] = useState(1);
     const [data, loading, error] = useFetch(()=> getPopularMovies(page), [page]);
     // que pasa con el scroll
@@ -30,7 +29,7 @@ const Home = () => {
 
     )}
     return (
-        <div className="space-y-8">
+        <div className="w-full space-y-8">
             <header className="text-center">
                 <h1 className="text-4xl font-bold text-sky-950">
                     Bienvenido a mi Videoclub
@@ -73,4 +72,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default HomePage

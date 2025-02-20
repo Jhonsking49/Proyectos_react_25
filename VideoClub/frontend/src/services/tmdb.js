@@ -12,12 +12,10 @@ export const IMAGES_SIZE = {
 //------------------------------Funciones que voy a crear para la API---------------------------------------------------------------
 
 // Funcion para obtener la url de una imagen
-export const getImageUrl = (size = IMAGES_SIZE.POSTER, path) =>{
-    if(!path){
-        return "/placeholder-movie.jpg";
-    }
-    return `${VITE_BASE_IMAGE_URL}/${size}/${path}`;
-}
+export const getImageUrl = (path, size = 'original') => {
+    if (!path) return null;
+    return `${import.meta.env.VITE_BASE_IMAGE_URL}${size}${path}`;
+};
 
 export const fetchFromAPI = async (endpoint, options = {} ) => {
     try{
@@ -51,3 +49,12 @@ export const getMovieVideos = async (id) => {
 export const getMovieReviews = async (id) => {
     return fetchFromAPI(`/movie/${id}/reviews`);
 }
+export const getMovieDetails = async (movieId) => {
+    const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/movie/${movieId}?api_key=${import.meta.env.VITE_API_TOKEN}&language=es-ES`
+    );
+    if (!response.ok) {
+        throw new Error('Error fetching movie details');
+    }
+    return response.json();
+};
