@@ -29,47 +29,48 @@ const HomePage = () => {
 
     )}
     return (
-        <div className="w-full space-y-8">
+        <div className="w-full space-y-8 bg-[#121212]">
             <header className="text-center">
-                <h1 className="text-4xl font-bold text-sky-950">
+                <h1 className="text-4xl font-bold text-[#FF007F] drop-shadow-[0_0_5px_#FF007F]">
                     Bienvenido a mi Videoclub
                 </h1>
-                <p className="text-sky-900 mt-2 font-medium text-lg">
+                <p className="text-[#1A1DFF] mt-2 font-medium text-lg drop-shadow-[0_0_3px_#1A1DFF]">
                     Descubre las películas más populares
                 </p>
             </header>
             <section>
-                <h2 className="text-2xl font-bold text-sky-950">
-                    Peliculas Populares
+                <h2 className="text-2xl font-bold text-[#FFC72C] drop-shadow-[0_0_3px_#FFC72C]">
+                    Películas Populares
                 </h2>
-                {loading ? (<div>Cargando Peliculas</div>) : (
+                {loading ? (
+                    <div className="text-[#FF007F]">Cargando Películas...</div>
+                ) : (
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                            {
-                                data?.results.map((movie) => (
-                                    <MovieCard key={movie.id} movie={movie} />
-                                ))
-                            }
+                            {data?.results.map((movie) => (
+                                <MovieCard key={movie.id} movie={movie} />
+                            ))}
                         </div>
                         <div className="flex justify-center space-x-4 mt-8">
-                            <button onClick={handleChangePage(page - 1)} className="rounded-lg transition-colors px-4 py-2 duration-200 bg-sky-800 text-white hover:bg-sky-950">
+                            <button 
+                                onClick={handleChangePage(page - 1)} 
+                                className="rounded-lg px-4 py-2 bg-[#FF007F] text-white hover:bg-[#FF007F]/80 transition-all duration-300"
+                            >
                                 Anterior
                             </button>
-                            <span>
-                                
-                            </span>
-                            <button onClick={handleChangePage(page + 1)} className="rounded-lg transition-colors px-4 py-2 duration-200 bg-sky-800 text-white hover:bg-sky-950">
+                            <button 
+                                onClick={handleChangePage(page + 1)} 
+                                className="rounded-lg px-4 py-2 bg-[#FF007F] text-white hover:bg-[#FF007F]/80 transition-all duration-300"
+                            >
                                 Siguiente
                             </button>
-                            <span>
-                                
-                            </span>
                         </div>
                     </>
                 )}
             </section>
         </div>
-    )
-}
+    );
+};
 
-export default HomePage
+// Add the default export
+export default HomePage;

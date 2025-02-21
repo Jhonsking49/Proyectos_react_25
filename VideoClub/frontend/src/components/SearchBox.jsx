@@ -11,22 +11,27 @@ const SearchBox = ({ onSearch, placeholder = "Buscar películas..." }) => {
     const handleChange = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
-        onSearch(value); // Real-time search
+        onSearch(value);
     };
 
     return (
         <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
-            <div className="relative">
+            <div className="relative group">
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={handleChange}
                     placeholder={placeholder}
-                    className="w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 text-gray-800 placeholder-gray-500"
+                    className="w-full px-4 py-3 pr-12 rounded-lg bg-[#121212] border-2 border-[#1A1DFF] text-white 
+                             placeholder-[#6B7280] focus:outline-none focus:border-[#FF007F] focus:ring-1 
+                             focus:ring-[#FF007F] transition-all duration-300
+                             group-hover:border-[#FF007F] group-hover:shadow-[0_0_10px_#1A1DFF]"
                 />
                 <button
                     type="submit"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-sky-600 transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#1A1DFF] 
+                             hover:text-[#FF007F] transition-all duration-300
+                             hover:drop-shadow-[0_0_5px_#FF007F]"
                 >
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 

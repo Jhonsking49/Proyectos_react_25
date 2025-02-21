@@ -51,18 +51,20 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-900">
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-96">
-                <h2 className="text-3xl font-bold text-white mb-6 text-center">Register</h2>
+        <div className="min-h-screen flex items-center justify-center bg-[#121212]">
+            <div className="bg-[#121212] p-8 rounded-lg shadow-lg w-96 border border-[#1A1DFF]">
+                <h2 className="text-3xl font-bold text-[#FF007F] mb-6 text-center drop-shadow-[0_0_5px_#FF007F]">
+                    Registro
+                </h2>
                 {error && (
-                    <div className="bg-red-500 text-white p-3 rounded mb-4 text-center">
+                    <div className="bg-[#FF007F]/20 text-[#FF007F] p-3 rounded mb-4 text-center border border-[#FF007F]">
                         {error}
                     </div>
                 )}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label htmlFor="username" className="block text-gray-300 mb-2">
-                            Username
+                        <label htmlFor="username" className="block text-[#FFC72C] mb-2">
+                            Usuario
                         </label>
                         <input
                             type="text"
@@ -70,13 +72,13 @@ const RegisterPage = () => {
                             name="username"
                             value={formData.username}
                             onChange={handleChange}
-                            className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                            className="w-full p-2 rounded bg-[#121212] text-white border border-[#1A1DFF] focus:border-[#FF007F] focus:ring-1 focus:ring-[#FF007F] focus:outline-none transition-all duration-300"
                             required
                         />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-gray-300 mb-2">
-                            Password
+                        <label htmlFor="password" className="block text-[#FFC72C] mb-2">
+                            Contraseña
                         </label>
                         <input
                             type="password"
@@ -84,13 +86,13 @@ const RegisterPage = () => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                            className="w-full p-2 rounded bg-[#121212] text-white border border-[#1A1DFF] focus:border-[#FF007F] focus:ring-1 focus:ring-[#FF007F] focus:outline-none transition-all duration-300"
                             required
                         />
                     </div>
                     <div>
-                        <label htmlFor="confirmPassword" className="block text-gray-300 mb-2">
-                            Confirm Password
+                        <label htmlFor="confirmPassword" className="block text-[#FFC72C] mb-2">
+                            Confirmar Contraseña
                         </label>
                         <input
                             type="password"
@@ -98,20 +100,20 @@ const RegisterPage = () => {
                             name="confirmPassword"
                             value={formData.confirmPassword}
                             onChange={handleChange}
-                            className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                            className="w-full p-2 rounded bg-[#121212] text-white border border-[#1A1DFF] focus:border-[#FF007F] focus:ring-1 focus:ring-[#FF007F] focus:outline-none transition-all duration-300"
                             required
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
+                        className="w-full bg-[#FF007F] text-white py-2 rounded hover:bg-[#FF007F]/80 transition-all duration-300"
                     >
-                        Register
+                        Registrarse
                     </button>
                 </form>
                 <div className="mt-4 text-center">
-                    <a href="/login" className="text-gray-300 hover:text-gray-400 transition duration-200">
-                        Already have an account? Login
+                    <a href="/login" className="text-[#1A1DFF] hover:text-[#FF007F] transition-colors duration-300">
+                        ¿Ya tienes una cuenta? Inicia sesión
                     </a>
                 </div>
             </div>

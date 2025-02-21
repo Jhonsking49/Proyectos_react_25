@@ -37,9 +37,9 @@ const ReviewsPage = () => {
     }));
 
     return (
-        <div className="w-full space-y-8">
+        <div className="w-full space-y-8 bg-[#121212]">
             <header className="text-center">
-                <h1 className="text-4xl font-bold text-sky-950">
+                <h1 className="text-4xl font-bold text-[#FF007F] drop-shadow-[0_0_5px_#FF007F]">
                     Reseñas de Películas
                 </h1>
             </header>
@@ -48,11 +48,11 @@ const ReviewsPage = () => {
                 {moviesWithReviews.length > 0 ? (
                     <div className="space-y-8">
                         {moviesWithReviews.map(({ movieId, movieData, reviews }) => (
-                            <div key={movieId} className="bg-gray-800 rounded-lg overflow-hidden">
+                            <div key={movieId} className="bg-[#121212] border border-[#1A1DFF] rounded-lg overflow-hidden">
                                 <div className="p-6">
                                     <Link 
                                         to={`/movie/${movieId}`}
-                                        className="text-2xl font-bold text-white hover:text-sky-400 transition-colors"
+                                        className="text-2xl font-bold text-[#FFC72C] hover:text-[#FF007F] transition-colors duration-300"
                                     >
                                         {movieData?.title || 'Cargando...'}
                                     </Link>
@@ -61,22 +61,22 @@ const ReviewsPage = () => {
                                         {reviews.map(review => (
                                             <div 
                                                 key={review.id} 
-                                                className="bg-gray-700 p-4 rounded-lg"
+                                                className="bg-[#121212] border border-[#1A1DFF]/30 p-4 rounded-lg"
                                             >
                                                 <div className="flex justify-between items-start mb-2">
                                                     <div>
-                                                        <span className="font-medium text-white">
+                                                        <span className="font-medium text-[#FF007F]">
                                                             {review.username}
                                                         </span>
-                                                        <span className="ml-2 text-yellow-500">
+                                                        <span className="ml-2 text-[#FFC72C]">
                                                             {review.rating} ⭐
                                                         </span>
                                                     </div>
-                                                    <span className="text-sm text-gray-400">
+                                                    <span className="text-sm text-[#6B7280]">
                                                         {new Date(review.date).toLocaleDateString()}
                                                     </span>
                                                 </div>
-                                                <p className="text-gray-300">{review.text}</p>
+                                                <p className="text-white">{review.text}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -86,10 +86,10 @@ const ReviewsPage = () => {
                     </div>
                 ) : (
                     <div className="text-center p-10">
-                        <h2 className="text-2xl text-gray-600">
+                        <h2 className="text-2xl text-[#1A1DFF]">
                             No hay reseñas todavía
                         </h2>
-                        <p className="text-gray-500 mt-2">
+                        <p className="text-[#6B7280] mt-2">
                             Sé el primero en escribir una reseña
                         </p>
                     </div>

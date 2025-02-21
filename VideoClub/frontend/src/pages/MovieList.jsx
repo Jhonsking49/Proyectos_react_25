@@ -81,9 +81,9 @@ const MovieList = () => {
     };
 
     return (
-        <div className="w-full space-y-8">
+        <div className="w-full space-y-8 bg-[#121212]">
             <header className="text-center">
-                <h1 className="text-4xl font-bold text-sky-950">
+                <h1 className="text-4xl font-bold text-[#FF007F] drop-shadow-[0_0_5px_#FF007F]">
                     Explorar Películas
                 </h1>
                 <div className="mt-6 flex flex-wrap justify-center gap-4">
@@ -91,13 +91,15 @@ const MovieList = () => {
                         name="year"
                         value={filters.year}
                         onChange={handleFilterChange}
-                        className="px-4 py-2 rounded-lg border border-gray-300"
+                        className="px-4 py-2 rounded-lg bg-[#121212] border-2 border-[#1A1DFF] text-white 
+                                hover:border-[#FF007F] focus:border-[#FF007F] focus:ring-1 focus:ring-[#FF007F] 
+                                transition-all duration-300 hover:shadow-[0_0_10px_#1A1DFF]"
                     >
                         <option value="">Año de estreno</option>
                         {Array.from({ length: 25 }, (_, i) => 
                             new Date().getFullYear() - i
                         ).map(year => (
-                            <option key={year} value={year}>{year}</option>
+                            <option key={year} value={year} className="bg-[#121212]">{year}</option>
                         ))}
                     </select>
 
@@ -105,11 +107,13 @@ const MovieList = () => {
                         name="rating"
                         value={filters.rating}
                         onChange={handleFilterChange}
-                        className="px-4 py-2 rounded-lg border border-gray-300"
+                        className="px-4 py-2 rounded-lg bg-[#121212] border-2 border-[#1A1DFF] text-white 
+                                 hover:border-[#FF007F] focus:border-[#FF007F] focus:ring-1 focus:ring-[#FF007F] 
+                                 transition-all duration-300 hover:shadow-[0_0_10px_#1A1DFF]"
                     >
                         <option value="">Valoración mínima</option>
                         {[9, 8, 7, 6, 5].map(rating => (
-                            <option key={rating} value={rating}>{rating}+ ⭐</option>
+                            <option key={rating} value={rating} className="bg-[#121212]">{rating}+ ⭐</option>
                         ))}
                     </select>
 
@@ -117,13 +121,15 @@ const MovieList = () => {
                         name="duration"
                         value={filters.duration}
                         onChange={handleFilterChange}
-                        className="px-4 py-2 rounded-lg border border-gray-300"
+                        className="px-4 py-2 rounded-lg bg-[#121212] border-2 border-[#1A1DFF] text-white 
+                                 hover:border-[#FF007F] focus:border-[#FF007F] focus:ring-1 focus:ring-[#FF007F] 
+                                 transition-all duration-300 hover:shadow-[0_0_10px_#1A1DFF]"
                     >
                         <option value="">Duración</option>
-                        <option value="0-90">Menos de 90 min</option>
-                        <option value="90-120">90-120 min</option>
-                        <option value="120-150">120-150 min</option>
-                        <option value="150-999">Más de 150 min</option>
+                        <option value="0-90" className="bg-[#121212]">Menos de 90 min</option>
+                        <option value="90-120" className="bg-[#121212]">90-120 min</option>
+                        <option value="120-150" className="bg-[#121212]">120-150 min</option>
+                        <option value="150-999" className="bg-[#121212]">Más de 150 min</option>
                     </select>
                 </div>
             </header>
@@ -131,11 +137,11 @@ const MovieList = () => {
             <section>
                 {loading ? (
                     <div className="flex justify-center items-center min-h-[400px]">
-                        <PacmanLoader color="#1d4ed8" />
+                        <PacmanLoader color="#FF007F" />
                     </div>
                 ) : error ? (
-                    <div className="text-center text-red-500 p-8">
-                        <h2 className="text-2xl font-bold">Error</h2>
+                    <div className="text-center text-[#FF007F] p-8">
+                        <h2 className="text-2xl font-bold drop-shadow-[0_0_3px_#FF007F]">Error</h2>
                         <p>{error.message}</p>
                     </div>
                 ) : (
@@ -148,10 +154,10 @@ const MovieList = () => {
 
                         {filteredMovies.length === 0 && (
                             <div className="text-center p-10">
-                                <h2 className="text-2xl text-gray-600">
+                                <h2 className="text-2xl text-[#1A1DFF] drop-shadow-[0_0_3px_#1A1DFF]">
                                     No se encontraron películas
                                 </h2>
-                                <p className="text-gray-500 mt-2">
+                                <p className="text-[#6B7280] mt-2">
                                     Prueba con otros filtros
                                 </p>
                             </div>
@@ -162,20 +168,21 @@ const MovieList = () => {
                                 <button
                                     onClick={() => setPage(prev => prev - 1)}
                                     disabled={page === 1}
-                                    className={`rounded-lg px-4 py-2 ${
+                                    className={`rounded-lg px-4 py-2 transition-all duration-300 ${
                                         page === 1
-                                            ? 'bg-gray-400 cursor-not-allowed'
-                                            : 'bg-sky-800 hover:bg-sky-950'
+                                            ? 'bg-[#6B7280] cursor-not-allowed'
+                                            : 'bg-[#FF007F] hover:bg-[#FF007F]/80 hover:shadow-[0_0_10px_#FF007F]'
                                     } text-white`}
                                 >
                                     Anterior
                                 </button>
-                                <span className="text-sky-950 font-medium">
+                                <span className="text-[#FFC72C] font-medium drop-shadow-[0_0_3px_#FFC72C]">
                                     Página {page}
                                 </span>
                                 <button
                                     onClick={() => setPage(prev => prev + 1)}
-                                    className="rounded-lg px-4 py-2 bg-sky-800 hover:bg-sky-950 text-white"
+                                    className="rounded-lg px-4 py-2 bg-[#FF007F] hover:bg-[#FF007F]/80 
+                                             text-white transition-all duration-300 hover:shadow-[0_0_10px_#FF007F]"
                                 >
                                     Siguiente
                                 </button>

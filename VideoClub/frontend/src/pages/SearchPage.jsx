@@ -36,9 +36,9 @@ const SearchPage = () => {
     };
 
     return (
-        <div className="w-full space-y-8">
+        <div className="w-full space-y-8 bg-[#121212]">
             <header className="text-center">
-                <h1 className="text-4xl font-bold text-sky-950">
+                <h1 className="text-4xl font-bold text-[#FF007F] drop-shadow-[0_0_5px_#FF007F]">
                     Buscar Películas
                 </h1>
                 <div className="mt-6">
@@ -49,12 +49,11 @@ const SearchPage = () => {
             <section>
                 {loading ? (
                     <div className="flex justify-center items-center min-h-[400px]">
-                        <PacmanLoader color="#1d4ed8" />
+                        <PacmanLoader color="#FF007F" />
                     </div>
                 ) : error ? (
-                    <div className="text-center text-red-500 p-8">
-                        <h2 className="text-2xl font-bold">Error</h2>
-                        <p>{error.message}</p>
+                    <div className="text-center p-8">
+                        <h2 className="text-2xl font-bold text-[#FF007F]">{error.message}</h2>
                     </div>
                 ) : (
                     <>
@@ -71,13 +70,13 @@ const SearchPage = () => {
                                         disabled={page === 1}
                                         className={`rounded-lg px-4 py-2 ${
                                             page === 1
-                                                ? 'bg-gray-400 cursor-not-allowed'
-                                                : 'bg-sky-800 hover:bg-sky-950'
-                                        } text-white`}
+                                                ? 'bg-[#6B7280] cursor-not-allowed'
+                                                : 'bg-[#FF007F] hover:bg-[#FF007F]/80'
+                                        } text-white transition-all duration-300`}
                                     >
                                         Anterior
                                     </button>
-                                    <span className="text-sky-950 font-medium">
+                                    <span className="text-[#FFC72C] font-medium">
                                         Página {page} de {data.total_pages}
                                     </span>
                                     <button
@@ -85,9 +84,9 @@ const SearchPage = () => {
                                         disabled={page === data.total_pages}
                                         className={`rounded-lg px-4 py-2 ${
                                             page === data.total_pages
-                                                ? 'bg-gray-400 cursor-not-allowed'
-                                                : 'bg-sky-800 hover:bg-sky-950'
-                                        } text-white`}
+                                                ? 'bg-[#6B7280] cursor-not-allowed'
+                                                : 'bg-[#FF007F] hover:bg-[#FF007F]/80'
+                                        } text-white transition-all duration-300`}
                                     >
                                         Siguiente
                                     </button>
@@ -95,19 +94,19 @@ const SearchPage = () => {
                             </>
                         ) : debouncedQuery ? (
                             <div className="text-center p-10">
-                                <h2 className="text-2xl text-gray-600">
+                                <h2 className="text-2xl text-[#1A1DFF]">
                                     No se encontraron resultados
                                 </h2>
-                                <p className="text-gray-500 mt-2">
+                                <p className="text-[#6B7280] mt-2">
                                     Intenta con otros términos de búsqueda
                                 </p>
                             </div>
                         ) : (
                             <div className="text-center p-10">
-                                <h2 className="text-2xl text-gray-600">
+                                <h2 className="text-2xl text-[#1A1DFF]">
                                     Comienza tu búsqueda
                                 </h2>
-                                <p className="text-gray-500 mt-2">
+                                <p className="text-[#6B7280] mt-2">
                                     Escribe algo para buscar películas
                                 </p>
                             </div>
