@@ -1,10 +1,12 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
+import { useToast } from './ToastContext';
 import { AuthContext } from './AuthContext';
 
 export const ReviewsContext = createContext();
 
 export const ReviewsProvider = ({ children }) => {
     const [reviews, setReviews] = useState({});
+    const { addToast } = useToast();
     const { user } = useContext(AuthContext);
 
     // Load reviews from localStorage when component mounts or user changes
@@ -29,67 +31,45 @@ export const ReviewsProvider = ({ children }) => {
     const addReview = (movieId, review) => {
         if (!user) return;
         
-        const newReview = {
-            id: Date.now(),
-            movieId,
-            text: review.text,
-            rating: review.rating,
-            date: new Date().toISOString(),
-            username: user.username
-        };
-
-        setReviews(prevReviews => ({
-            ...prevReviews,
-            [movieId]: [...(prevReviews[movieId] || []), newReview]
-        }));
-    };
-
-    const removeReview = (movieId, reviewId) => {
-        if (!user) return;
-
-        setReviews(prevReviews => ({
-            ...prevReviews,
-            [movieId]: prevReviews[movieId]?.filter(review => review.id !== reviewId) || []
-        }));
+        setReviews(prevReviews => {
+            const movieReviews = prevReviews[movieId] || [];
+            const newReview = {
+                id: Date.now(),
+                ...review,
+                username: user.username,
+                date: new Date().toISOString(),
+            };
+            return {
+                ...prevReviews,
+                [movieId]: [...movieReviews, newReview]
+            };
+        });
     };
 
     const getMovieReviews = (movieId) => {
         return reviews[movieId] || [];
     };
 
-    const getUserReviews = () => {
-        const userReviews = [];
-        Object.values(reviews).forEach(movieReviews => {
-            movieReviews.forEach(review => {
-                if (review.username === user?.username) {
-                    userReviews.push(review);
-                }
-            });
-        });
-        return userReviews;
-    };
-
-    const updateReview = (movieId, reviewId, updatedReview) => {
+    const deleteReview = (movieId, reviewId) => {
         if (!user) return;
 
-        setReviews(prevReviews => ({
-            ...prevReviews,
-            [movieId]: prevReviews[movieId]?.map(review =>
-                review.id === reviewId
-                    ? { ...review, ...updatedReview, lastEdited: new Date().toISOString() }
-                    : review
-            ) || []
-        }));
+        setReviews(prevReviews => {
+            const movieReviews = prevReviews[movieId] || [];
+            const updatedReviews = movieReviews.filter(review => review.id !== reviewId);
+            addToast('Reseña eliminada correctamente', 'info');
+            return {
+                ...prevReviews,
+                [movieId]: updatedReviews
+            };
+        });
     };
 
     return (
-        <ReviewsContext.Provider value={{
-            reviews,
-            addReview,
-            removeReview,
-            getMovieReviews,
-            getUserReviews,
-            updateReview
+        <ReviewsContext.Provider value={{ 
+            reviews, 
+            addReview, 
+            deleteReview,
+            getMovieReviews 
         }}>
             {children}
         </ReviewsContext.Provider>

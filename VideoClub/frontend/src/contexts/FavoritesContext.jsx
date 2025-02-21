@@ -1,11 +1,13 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { AuthContext } from './AuthContext';
+import { useToast } from './ToastContext';
 
 export const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
     const [favorites, setFavorites] = useState([]);
     const { user } = useContext(AuthContext);
+    const { addToast } = useToast();
 
     // Load favorites from localStorage on mount and when user changes
     useEffect(() => {
@@ -30,6 +32,7 @@ export const FavoritesProvider = ({ children }) => {
         if (!user) return;
         setFavorites(prevFavorites => {
             if (!prevFavorites.some(fav => fav.id === movie.id)) {
+                addToast(`"${movie.title}" añadida a favoritos`, 'success');
                 return [...prevFavorites, {
                     id: movie.id,
                     title: movie.title,
@@ -44,9 +47,14 @@ export const FavoritesProvider = ({ children }) => {
 
     const removeFavorite = (movieId) => {
         if (!user) return;
-        setFavorites(prevFavorites => 
-            prevFavorites.filter(movie => movie.id !== movieId)
-        );
+        const movie = favorites.find(m => m.id === movieId);
+        setFavorites(prevFavorites => {
+            const newFavorites = prevFavorites.filter(movie => movie.id !== movieId);
+            if (movie) {
+                addToast(`"${movie.title}" eliminada de favoritos`, 'info');
+            }
+            return newFavorites;
+        });
     };
 
     const isFavorite = (movieId) => {

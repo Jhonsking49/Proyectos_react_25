@@ -3,15 +3,18 @@ import { router } from "./router"
 import { FavoritesProvider } from './contexts/FavoritesContext';
 import { AuthProvider } from "./contexts/AuthContext";
 import { ReviewsProvider } from './contexts/ReviewsContext';
+import { ToastProvider } from './contexts/ToastContext';
 
 function App() {
     return (
         <AuthProvider>
-            <ReviewsProvider>
-                <FavoritesProvider>
-                    <RouterProvider router={router} />
-                </FavoritesProvider>
-            </ReviewsProvider>
+            <ToastProvider>
+                <ReviewsProvider>
+                    <FavoritesProvider>
+                        <RouterProvider router={router} />
+                    </FavoritesProvider>
+                </ReviewsProvider>
+            </ToastProvider>
         </AuthProvider>
     );
 }

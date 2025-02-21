@@ -1,38 +1,44 @@
 import { Link } from "react-router-dom"
 import { getImageUrl, IMAGES_SIZE } from "../services/tmdb";
+import { useContext } from 'react';
+import { FavoritesContext } from '../contexts/FavoritesContext';
+import '../styles/animations.css';
 
 const MovieCard = ({ movie }) => {
-    const posterUrl = movie.poster_path 
-        ? getImageUrl(movie.poster_path, IMAGES_SIZE.POSTER)
-        : 'https://via.placeholder.com/500x750?text=No+Image';
+    const { isFavorite, addFavorite, removeFavorite } = useContext(FavoritesContext);
+    const isMovieFavorite = isFavorite(movie.id);
 
     return (
-        <Link to={`/movie/${movie.id}`} className="block transition-transform hover:scale-105">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="hover-scale scale-in bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+            <Link to={`/movie/${movie.id}`} className="block relative group">
                 <img
-                    src={posterUrl}
+                    src={getImageUrl(movie.poster_path)}
                     alt={movie.title}
-                    className="w-full h-[400px] object-cover"
-                    onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/500x750?text=No+Image';
-                    }}
+                    className="w-full h-auto transition-opacity duration-300 group-hover:opacity-75"
                 />
-                <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-800 truncate">
-                        {movie.title}
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                        {new Date(movie.release_date).getFullYear()}
-                    </p>
-                    <div className="mt-2 flex items-center">
-                        <span className="text-yellow-500">⭐</span>
-                        <span className="ml-1 text-gray-600">
-                            {movie.vote_average.toFixed(1)}
-                        </span>
-                    </div>
+                <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
+                    <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
+                        Ver detalles
+                    </span>
+                </div>
+            </Link>
+            <div className="p-4">
+                <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2">
+                    {movie.title}
+                </h3>
+                <div className="flex items-center justify-between">
+                    <span className="text-yellow-400 flex items-center">
+                        ⭐ {movie.vote_average.toFixed(1)}
+                    </span>
+                    <button
+                        onClick={() => isMovieFavorite ? removeFavorite(movie.id) : addFavorite(movie)}
+                        className="text-2xl transition-transform duration-300 hover:scale-110"
+                    >
+                        {isMovieFavorite ? '❤️' : '🤍'}
+                    </button>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 };
 

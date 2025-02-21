@@ -9,12 +9,10 @@ export const IMAGES_SIZE = {
     BACKDROP: "original",
 }
 
-//------------------------------Funciones que voy a crear para la API---------------------------------------------------------------
-
 // Funcion para obtener la url de una imagen
-export const getImageUrl = (path, size = 'original') => {
-    if (!path) return null;
-    return `${import.meta.env.VITE_BASE_IMAGE_URL}${size}${path}`;
+export const getImageUrl = (path, size = IMAGES_SIZE.POSTER) => {
+    if (!path) return 'https://via.placeholder.com/500x750?text=No+Image';
+    return `${VITE_BASE_IMAGE_URL}${size}${path}`;
 };
 
 export const fetchFromAPI = async (endpoint, options = {} ) => {
