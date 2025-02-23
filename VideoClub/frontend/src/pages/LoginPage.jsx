@@ -1,4 +1,3 @@
-
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
@@ -28,26 +27,28 @@ const LoginPage = () => {
             if (success) {
                 navigate("/");
             } else {
-                setError("Invalid credentials");
+                setError("Credenciales inválidas");
             }
         } catch (err) {
-            setError("An error occurred during login");
+            setError("Ocurrió un error durante el inicio de sesión");
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-900">
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-96">
-                <h2 className="text-3xl font-bold text-white mb-6 text-center">Login</h2>
+        <div className="min-h-screen flex items-center justify-center bg-[#121212]">
+            <div className="bg-[#121212] p-8 rounded-lg shadow-lg w-96 border-2 border-[#1A1DFF] hover:shadow-[0_0_15px_#1A1DFF] transition-all duration-300">
+                <h1 className="text-4xl font-bold text-[#FF007F] mb-6 text-center drop-shadow-[0_0_5px_#FF007F]">
+                    Login
+                </h1>
                 {error && (
                     <div className="bg-red-500 text-white p-3 rounded mb-4 text-center">
                         {error}
                     </div>
                 )}
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label htmlFor="username" className="block text-gray-300 mb-2">
-                            Username
+                        <label htmlFor="username" className="block text-[#FFC72C] mb-2 font-medium">
+                            Usuario
                         </label>
                         <input
                             type="text"
@@ -55,13 +56,15 @@ const LoginPage = () => {
                             name="username"
                             value={formData.username}
                             onChange={handleChange}
-                            className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                            className="w-full p-3 rounded bg-[#121212] text-white border-2 border-[#1A1DFF] 
+                                     focus:border-[#FF007F] focus:outline-none focus:ring-1 focus:ring-[#FF007F] 
+                                     transition-all duration-300 hover:border-[#FF007F]"
                             required
                         />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-gray-300 mb-2">
-                            Password
+                        <label htmlFor="password" className="block text-[#FFC72C] mb-2 font-medium">
+                            Contraseña
                         </label>
                         <input
                             type="password"
@@ -69,20 +72,27 @@ const LoginPage = () => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                            className="w-full p-3 rounded bg-[#121212] text-white border-2 border-[#1A1DFF] 
+                                     focus:border-[#FF007F] focus:outline-none focus:ring-1 focus:ring-[#FF007F] 
+                                     transition-all duration-300 hover:border-[#FF007F]"
                             required
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
+                        className="w-full bg-[#FF007F] text-white py-3 rounded-lg hover:bg-[#FF007F]/80 
+                                 transition-all duration-300 font-medium text-lg hover:shadow-[0_0_10px_#FF007F]"
                     >
-                        Login
+                        Iniciar Sesión
                     </button>
                 </form>
-                <div className="mt-4 text-center">
-                    <a href="/register" className="text-gray-300 hover:text-gray-400 transition duration-200">
-                        Registrarse
+                <div className="mt-6 text-center">
+                    <a 
+                        href="/register" 
+                        className="text-[#1A1DFF] hover:text-[#FF007F] transition duration-300 
+                                 font-medium drop-shadow-[0_0_3px_#1A1DFF] hover:drop-shadow-[0_0_3px_#FF007F]"
+                    >
+                        ¿No tienes cuenta? Regístrate
                     </a>
                 </div>
             </div>

@@ -19,14 +19,14 @@ export const FavoritesProvider = ({ children }) => {
         } else {
             setFavorites([]);
         }
-    }, [user]);
+    }, []);
 
     // Save favorites to localStorage whenever they change
     useEffect(() => {
         if (user) {
             localStorage.setItem(`favorites_${user.username}`, JSON.stringify(favorites));
         }
-    }, [favorites, user]);
+    }, [favorites]);
 
     const addFavorite = (movie) => {
         if (!user) return;
